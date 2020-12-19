@@ -29,59 +29,21 @@
 
 - (ALPHAApplicationAuthorizationStatus)status
 {
-    if ([self useContactsFramework])
-    {
-        return (ALPHAApplicationAuthorizationStatus)[CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized;
-    }
-    else
-    {
-        return (ALPHAApplicationAuthorizationStatus)ABAddressBookGetAuthorizationStatus();
-    }
+    return (ALPHAApplicationAuthorizationStatus)[CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized;
 }
 
 - (void)requestPermission:(ALPHAPermissionRequestCompletion)completion
 {
-    if ([self useContactsFramework])
+    [self requestContactsPermissionWithCompletion:^(BOOL granted, NSError *error)
     {
-        [self requestContactsPermissionWithCompletion:^(BOOL granted, NSError *error)
+        if (completion)
         {
-            if (completion)
-            {
-                completion (self, (granted) ? ALPHAApplicationAuthorizationStatusAuthorized : ALPHAApplicationAuthorizationStatusDenied, error);
-            }
-        }];
-    }
-    else
-    {
-        [self requestAddressBookPermissionWithCompletion:^(BOOL granted, NSError *error)
-        {
-            if (completion)
-            {
-                completion (self, (granted) ? ALPHAApplicationAuthorizationStatusAuthorized : ALPHAApplicationAuthorizationStatusDenied, error);
-            }
-        }];
-    }
+            completion (self, (granted) ? ALPHAApplicationAuthorizationStatusAuthorized : ALPHAApplicationAuthorizationStatusDenied, error);
+        }
+    }];
 }
 
 #pragma mark - Private Methods
-
-- (BOOL)useContactsFramework
-{
-    return [[CNContactStore alloc] init] != nil;
-}
-
-- (void)requestAddressBookPermissionWithCompletion:(void (^)(BOOL granted, NSError *error))completion
-{
-    ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef err)
-    {
-        NSError *error = (__bridge NSError *)err;
-
-        if (completion)
-        {
-            completion(granted, error);
-        }
-    });
-}
 
 - (void)requestContactsPermissionWithCompletion:(void (^)(BOOL granted, NSError *error))completion
 {
