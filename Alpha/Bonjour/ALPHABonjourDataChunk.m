@@ -117,7 +117,12 @@
                 return NO;
             }
             
-            archivedData = [NSKeyedArchiver archivedDataWithRootObject:object];
+            if (@available(iOS 12, *)) {
+                archivedData = [NSKeyedArchiver archivedDataWithRootObject:object requiringSecureCoding:NO error:nil];
+            } else {
+                archivedData = [NSKeyedArchiver archivedDataWithRootObject:object];
+            }
+
             contentType = @"application/octet-stream";
             
             break;

@@ -6,6 +6,8 @@
 //  Copyright © 2015 Unified Sense. All rights reserved.
 //
 
+#import <WebKit/WebKit.h>
+
 #import "ALPHAUtility.h"
 
 #import "ALPHAScreenManager.h"
@@ -18,9 +20,9 @@
 
 #import "ALPHAWebRendererViewController.h"
 
-@interface ALPHAWebRendererViewController () <UIWebViewDelegate>
+@interface ALPHAWebRendererViewController () <WKNavigationDelegate>
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) NSTimer *refreshTimer;
 
 @end
@@ -123,9 +125,9 @@
 {
     // UIWebView's delegate is assigned so we need to clear it manually.
     
-    if (self.webView.delegate == self)
+    if (self.webView.navigationDelegate == self)
     {
-        self.webView.delegate = nil;
+        self.webView.navigationDelegate = nil;
     }
 }
 
@@ -134,11 +136,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.webView = [[UIWebView alloc] init];
-    self.webView.delegate = self;
-    self.webView.dataDetectorTypes = UIDataDetectorTypeLink;
-    self.webView.scalesPageToFit = YES;
     
     [self.view addSubview:self.webView];
     self.webView.frame = self.view.bounds;
@@ -193,25 +190,28 @@
     [[UIPasteboard generalPasteboard] setString:[self.object description]];
 }
 
-#pragma mark - UIWebView Delegate
+#pragma mark - WKNavigationDelegate
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    BOOL shouldStart = NO;
-    
-    if (navigationType == UIWebViewNavigationTypeOther)
-    {
-        // Allow the initial load
-        shouldStart = YES;
-    }
-    else
-    {
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+
+    if (navigationAction.navigationType == WKNavigationTypeOther) {
+        decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
         // For clicked links, push another web view controller onto the navigation stack so that hitting the back button works as expected.
         // Don't allow the current web view do handle the navigation.
         
-        [[ALPHAScreenManager defaultManager] pushObject:[request URL]];
+        [[ALPHAScreenManager defaultManager] pushObject:navigationAction.request.URL];
+        decisionHandler(WKNavigationActionPolicyAllow);
     }
-    return shouldStart;
+}
+
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    NSString *scriptFontSizeAdjustment = @"var style = document.createElement('style');style.innerHTML = 'body { -webkit-text-size-adjust: none; }';document.getElementsByTagName('head')[0].appendChild(style);";
+
+    NSString *scriptImgSizeAdjustment = @"var style = document.createElement('style');style.innerHTML = 'img { display: inline;height: auto;max-width: 100%; }';document.getElementsByTagName('head')[0].appendChild(style);";
+
+    [webView evaluateJavaScript:scriptFontSizeAdjustment completionHandler:nil];
+    [webView evaluateJavaScript:scriptImgSizeAdjustment completionHandler:nil];
 }
 
 #pragma mark - Private methods
@@ -227,6 +227,16 @@
         [self.refreshTimer invalidate];
         self.refreshTimer = nil;
     }
+}
+
+- (WKWebView *)webView {
+    if (!_webView) {
+        WKWebViewConfiguration *config = WKWebViewConfiguration.new;
+        config.dataDetectorTypes = WKDataDetectorTypeLink;
+        _webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:config];
+        _webView.navigationDelegate = self;
+    }
+    return _webView;
 }
 
 #pragma mark - Class Helpers
