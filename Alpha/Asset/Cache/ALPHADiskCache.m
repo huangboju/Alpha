@@ -609,7 +609,12 @@ NSString * const ALPHADiskCacheSharedName = @"ALPHADiskAssetCacheShared";
         
         if ([[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]]) {
             @try {
-                object = [NSKeyedUnarchiver unarchiveObjectWithFile:[fileURL path]];
+                if (@available(iOS 12.0, *)) {
+                    NSData *data = [NSData dataWithContentsOfFile:fileURL.path];
+                    object = [NSKeyedUnarchiver unarchivedObjectOfClass:NSObject.class fromData:data error:nil];
+                } else {
+                    object = [NSKeyedUnarchiver unarchiveObjectWithFile:fileURL.path];
+                }
             }
             @catch (NSException *exception) {
                 NSError *error = nil;

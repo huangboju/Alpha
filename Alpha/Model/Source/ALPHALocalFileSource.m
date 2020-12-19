@@ -72,7 +72,11 @@
         {
             if ([[url pathExtension] isEqual:@"archive"])
             {
-                data = [[NSKeyedUnarchiver unarchiveObjectWithData:data] description];
+                if (@available(iOS 12.0, *)) {
+                    data = [NSKeyedUnarchiver unarchivedObjectOfClass:NSString.class fromData:data error:nil];
+                } else {
+                    data = [[NSKeyedUnarchiver unarchiveObjectWithData:data] description];
+                }
             }
             else if ([[url pathExtension] isEqualToString:@"json"])
             {
