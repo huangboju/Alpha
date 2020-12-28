@@ -89,8 +89,12 @@
         {
             NSString *title = @"Property Setter Failed";
             NSString *message = [error localizedDescription];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:cancel];
+            
+            [self presentViewController:alert animated:YES completion:nil];
         }
         else
         {

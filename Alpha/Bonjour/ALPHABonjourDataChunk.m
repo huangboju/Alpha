@@ -181,7 +181,11 @@
     }
     else if (_encoding == ALPHABonjourDataConnectionContentTypeNSCoding)
     {
-        object = [NSKeyedUnarchiver unarchiveObjectWithData:payloadData];
+        if (@available(iOS 12.0, *)) {
+            object = [NSKeyedUnarchiver unarchivedObjectOfClass:NSObject.class fromData:payloadData error:nil];
+        } else {
+            object = [NSKeyedUnarchiver unarchiveObjectWithData:payloadData];
+        }
     }
     
     if (!object)
