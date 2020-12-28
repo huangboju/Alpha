@@ -94,19 +94,18 @@ static void cancel_delayed_block(ALPHADelayedBlockHandle delayedHandle)
 
 - (CGFloat)scrollTime;
 
+@property (nonatomic, strong) UIImageView *textImage;
+
 @end
 
 @implementation ALPHANotificationScrollLabel
-{
-    UIImageView *textImage;
-}
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        textImage = [[UIImageView alloc] init];
-        [self addSubview:textImage];
+        self.textImage = [[UIImageView alloc] init];
+        [self addSubview:self.textImage];
     }
     return self;
 }
@@ -139,20 +138,20 @@ static void cancel_delayed_block(ALPHADelayedBlockHandle delayedHandle)
         rect.size.width = [self fullWidth] + PADDING * 2;
         UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
         [super drawTextInRect:rect];
-        textImage.image = UIGraphicsGetImageFromCurrentImageContext();
+        self.textImage.image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        [textImage sizeToFit];
+        [self.textImage sizeToFit];
         [UIView animateWithDuration:[self scrollTime] - SCROLL_DELAY
                               delay:SCROLL_DELAY
                             options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             textImage.transform = CGAffineTransformMakeTranslation(-[self scrollOffset], 0);
+                             self.textImage.transform = CGAffineTransformMakeTranslation(-[self scrollOffset], 0);
                          } completion:^(BOOL finished) {
                 }];
     }
     else
     {
-        textImage.image = nil;
+        self.textImage.image = nil;
         [super drawTextInRect:CGRectInset(rect, PADDING, 0)];
     }
 }
