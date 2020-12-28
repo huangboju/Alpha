@@ -22,7 +22,7 @@ Pod::Spec.new do |spec|
   spec.author                 = { "Dal Rupnik" => "legoless@gmail.com" }
   spec.social_media_url       = "https://twitter.com/thelegoless"
   spec.source                 = { :git => "https://github.com/legoless/Alpha.git", :tag => "#{spec.version}" }
-  spec.ios.deployment_target  = '8.0'
+  spec.ios.deployment_target  = '10.0'
   spec.source_files           = "Alpha/Alpha.h"
   spec.requires_arc           = true
 
@@ -269,7 +269,7 @@ Pod::Spec.new do |spec|
     subspec.dependency 'Alpha/Core'
     subspec.dependency 'Alpha/Render'
   end
-  
+
   #
   # Permission
   #
@@ -278,7 +278,7 @@ Pod::Spec.new do |spec|
     subspec.source_files = 'Alpha/Plugins/Permission/**/*.{h,m}'
     subspec.dependency 'Alpha/Core'
   end
-  
+
   #
   # Remote
   #
