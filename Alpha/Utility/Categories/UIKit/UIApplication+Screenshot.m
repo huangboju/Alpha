@@ -98,18 +98,25 @@
  */
 - (UIView *)statusBarView
 {
-    NSString *key = [[NSString alloc] initWithData:[NSData dataWithBytes:(unsigned char []){0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x42, 0x61, 0x72} length:9] encoding:NSASCIIStringEncoding];
-    
-    id object = self;
-    
-    UIView *statusBar = nil;
-    
-    if ([object respondsToSelector:NSSelectorFromString(key)])
-    {
-        statusBar = [object valueForKey:key];
+    if (@available(iOS 13.0, *)) {
+        NSInteger tag = 38482;
+        UIWindow *keyWindow = UIApplication.sharedApplication.windows.firstObject;
+        UIView *statusBar = [keyWindow viewWithTag:tag];
+        if (statusBar) {
+            return statusBar;
+        } else {
+            CGRect statusBarFrame = keyWindow.windowScene.statusBarManager.statusBarFrame;
+            if (CGRectEqualToRect(statusBarFrame, CGRectZero)) {
+                return nil;
+            }
+            UIView *statusBarView = [[UIView alloc] initWithFrame:statusBarFrame];
+            statusBarView.tag = tag;
+            [keyWindow addSubview:statusBarView];
+            return statusBarView;
+        }
+    } else {
+        return [self valueForKey:@"statusBar"];
     }
-    
-    return statusBar;
 }
 
 @end

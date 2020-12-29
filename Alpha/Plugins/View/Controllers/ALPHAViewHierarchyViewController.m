@@ -140,29 +140,30 @@
     return shouldAutorotate;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    for (UIView *outlineView in [self.outlineViewsForVisibleViews allValues]) {
-        outlineView.hidden = YES;
-    }
-    self.selectedViewOverlay.hidden = YES;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    for (UIView *view in self.viewsAtTapPoint) {
-        NSValue *key = [NSValue valueWithNonretainedObject:view];
-        UIView *outlineView = self.outlineViewsForVisibleViews[key];
-        outlineView.frame = [self frameInLocalCoordinatesForView:view];
-        if (self.currentMode == ALPHAViewHierarchyModeSelect) {
-            outlineView.hidden = NO;
-        }
-    }
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
-    if (self.selectedView) {
-        self.selectedViewOverlay.frame = [self frameInLocalCoordinatesForView:self.selectedView];
-        self.selectedViewOverlay.hidden = NO;
-    }
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        for (UIView *outlineView in [self.outlineViewsForVisibleViews allValues]) {
+            outlineView.hidden = YES;
+        }
+        self.selectedViewOverlay.hidden = YES;
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        for (UIView *view in self.viewsAtTapPoint) {
+            NSValue *key = [NSValue valueWithNonretainedObject:view];
+            UIView *outlineView = self.outlineViewsForVisibleViews[key];
+            outlineView.frame = [self frameInLocalCoordinatesForView:view];
+            if (self.currentMode == ALPHAViewHierarchyModeSelect) {
+                outlineView.hidden = NO;
+            }
+        }
+        
+        if (self.selectedView) {
+            self.selectedViewOverlay.frame = [self frameInLocalCoordinatesForView:self.selectedView];
+            self.selectedViewOverlay.hidden = NO;
+        }
+    }];
 }
 
 

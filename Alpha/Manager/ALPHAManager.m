@@ -369,6 +369,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:self.theme.statusBarStyle animated:animated];
     
     // Show the view controller.
+    viewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.rootViewController presentViewController:viewController animated:animated completion:completion];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ALPHAStatusBarUpdateNotification object:nil];
