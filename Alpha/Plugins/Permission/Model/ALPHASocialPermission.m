@@ -69,10 +69,10 @@
 + (NSArray *)allPermissions
 {
     return @[
-        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierTwitter],
-        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierFacebook],
-        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierSinaWeibo],
-        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierTencentWeibo]
+//        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierTwitter],
+//        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierFacebook],
+//        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierSinaWeibo],
+//        [[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierTencentWeibo]
         //[[ALPHASocialPermission alloc] initWithIdentifier:ACAccountTypeIdentifierLinkedIn]
     ];
 }
