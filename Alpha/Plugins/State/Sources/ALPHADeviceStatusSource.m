@@ -239,16 +239,31 @@ NSString* const ALPHADeviceStatusDataIdentifier = @"com.unifiedsense.alpha.data.
     ALPHAScreenSection* networkSection = [ALPHAScreenSection screenSectionWithDictionary:sectionData];
     
     CTTelephonyNetworkInfo* info = [[CTTelephonyNetworkInfo alloc] init];
+    
+    CTCarrier *carrier;
+    if (@available(iOS 12.1, *)) {
+        NSDictionary<NSString *, CTCarrier *> *providers= [info serviceSubscriberCellularProviders];
+        carrier = providers.allValues.firstObject;
+    } else {
+        carrier = info.subscriberCellularProvider;
+    }
+    
+    NSString *currentRadioAccessTechnology;
+    if (@available(iOS 12.1, *)) {
+        currentRadioAccessTechnology = info.serviceCurrentRadioAccessTechnology.allValues.firstObject;
+    } else {
+        currentRadioAccessTechnology = info.currentRadioAccessTechnology;
+    }
 
     sectionData = @{ @"identifier" : @"com.unifiedsense.alpha.data.status.cellular",
                      @"items" : @[
                              @{ @"Carrier" : [UIDevice currentDevice].alpha_carrierName },
-                             @{ @"Carrier Name" : ALPHAEncodeString([info.subscriberCellularProvider.carrierName capitalizedString]) },
-                             @{ @"Data Connection": ALPHAEncodeString([self radioTypeFromRadioAccessTechnology:info.currentRadioAccessTechnology]) },
-                             @{ @"Country Code" : ALPHAEncodeString(info.subscriberCellularProvider.mobileCountryCode) },
-                             @{ @"Network Code" : ALPHAEncodeString(info.subscriberCellularProvider.mobileNetworkCode) },
-                             @{ @"ISO Country Code" : ALPHAEncodeString(info.subscriberCellularProvider.isoCountryCode) },
-                             @{ @"VoIP Enabled" : ALPHAEncodeBool(info.subscriberCellularProvider.allowsVOIP) }
+                             @{ @"Carrier Name" : ALPHAEncodeString([carrier.carrierName capitalizedString]) },
+                             @{ @"Data Connection": ALPHAEncodeString([self radioTypeFromRadioAccessTechnology:currentRadioAccessTechnology]) },
+                             @{ @"Country Code" : ALPHAEncodeString(carrier.mobileCountryCode) },
+                             @{ @"Network Code" : ALPHAEncodeString(carrier.mobileNetworkCode) },
+                             @{ @"ISO Country Code" : ALPHAEncodeString(carrier.isoCountryCode) },
+                             @{ @"VoIP Enabled" : ALPHAEncodeBool(carrier.allowsVOIP) }
                      ],
                      @"style" : @(UITableViewCellStyleValue1),
                      @"headerText" : @"Cellular" };
