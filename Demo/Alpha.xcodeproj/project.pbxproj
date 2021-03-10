@@ -367,7 +367,6 @@
 		535682BE18F3670300BAAD62 /* AAPLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535682A418F3670300BAAD62 /* AAPLWebViewController.m */; };
 		535682BF18F3670300BAAD62 /* UIColor+AAPLApplicationSpecific.m in Sources */ = {isa = PBXBuildFile; fileRef = 535682A618F3670300BAAD62 /* UIColor+AAPLApplicationSpecific.m */; };
 		53874F9918F36B1800510922 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53874F9718F36B1800510922 /* Localizable.strings */; };
-		DBC35ECE397747DD99FA2762 /* Pods_UICatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37054DA17DB1C1270E871813 /* Pods_UICatalog.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1119,7 +1118,6 @@
 				5356824218F3656900BAAD62 /* UIKit.framework in Frameworks */,
 				5356823E18F3656900BAAD62 /* Foundation.framework in Frameworks */,
 				284C1D71FC9DCDC24992F833 /* Pods_UICatalog.framework in Frameworks */,
-				DBC35ECE397747DD99FA2762 /* Pods_UICatalog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2967,7 +2965,7 @@
 			attributes = {
 				CLASSPREFIX = ALPHA;
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Unified Sense";
 				TargetAttributes = {
 					3810F5731DFED3C3004F51B6 = {
@@ -3558,7 +3556,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UICatalog/UICatalog-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/../AlphaTool/AlphaTool-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.unifiedsense.alpha.tool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3579,7 +3577,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UICatalog/UICatalog-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/../AlphaTool/AlphaTool-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.unifiedsense.alpha.tool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3605,7 +3603,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/../Alpha/Alpha-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.unifiedsense.sdk.Alpha;
@@ -3634,7 +3632,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/../Alpha/Alpha-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.unifiedsense.sdk.Alpha;
@@ -3906,7 +3904,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UICatalog/UICatalog-Prefix.pch";
 				INFOPLIST_FILE = "UICatalog/UICatalog-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.unifiedsense.apple-samplecode.UICatalog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3928,7 +3926,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UICatalog/UICatalog-Prefix.pch";
 				INFOPLIST_FILE = "UICatalog/UICatalog-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.unifiedsense.apple-samplecode.UICatalog";
 				PRODUCT_NAME = "$(TARGET_NAME)";

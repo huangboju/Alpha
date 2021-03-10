@@ -255,10 +255,10 @@ Pod::Spec.new do |spec|
   # Notification
   #
 
-  spec.subspec 'Notification' do |subspec|
-    subspec.source_files = 'Alpha/Plugins/Notification/**/*.{h,m}'
-    subspec.dependency 'Alpha/Core'
-  end
+  # spec.subspec 'Notification' do |subspec|
+  #   subspec.source_files = 'Alpha/Plugins/Notification/**/*.{h,m}'
+  #   subspec.dependency 'Alpha/Core'
+  # end
 
   #
   # Object
