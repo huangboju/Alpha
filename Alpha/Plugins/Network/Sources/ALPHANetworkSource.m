@@ -173,7 +173,11 @@ NSString *const ALPHANetworkDataIdentifier = @"com.unifiedsense.alpha.data.netwo
         return;
     }
     
+#ifdef __IPHONE_6_0
+    IMP implementation = imp_implementationWithBlock((id)([cls instancesRespondToSelector:selector] ? implementationBlock : undefinedBlock));
+#else
     IMP implementation = imp_implementationWithBlock((__bridge void *)([cls instancesRespondToSelector:selector] ? implementationBlock : undefinedBlock));
+#endif
     
     Method oldMethod = class_getInstanceMethod(cls, selector);
     if (oldMethod) {
