@@ -26,6 +26,7 @@
 @import ObjectiveC.runtime;
 @import ObjectiveC.message;
 
+#import <Foundation/Foundation.h>
 #import "ALPHANetworkSource.h"
 #import "ALPHARequestState.h"
 
@@ -107,12 +108,10 @@ NSString *const ALPHANetworkDataIdentifier = @"com.unifiedsense.alpha.data.netwo
 + (NSString *)nextRequestID;
 {
     static NSInteger sequenceNumber = 0;
-    static NSString *seed = nil;
+    static NSString *seed;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        CFUUIDRef uuid = CFUUIDCreate(CFAllocatorGetDefault());
-        seed = (__bridge NSString *)CFUUIDCreateString(CFAllocatorGetDefault(), uuid);
-        CFRelease(uuid);
+        seed = NSUUID.UUID.UUIDString;
     });
     
     return [[NSString alloc] initWithFormat:@"%@-%ld", seed, (long)(++sequenceNumber)];
