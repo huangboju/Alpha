@@ -246,10 +246,10 @@ Pod::Spec.new do |spec|
   # Network
   #
 
-  spec.subspec 'Network' do |subspec|
-    subspec.source_files = 'Alpha/Plugins/Network/**/*.{h,m}'
-    subspec.dependency 'Alpha/Core'
-  end
+  # spec.subspec 'Network' do |subspec|
+  #   subspec.source_files = 'Alpha/Plugins/Network/**/*.{h,m}'
+  #   subspec.dependency 'Alpha/Core'
+  # end
 
   #
   # Notification
